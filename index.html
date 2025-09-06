@@ -24,6 +24,12 @@
                     <li><a href="#projects">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
                 <div class="theme-toggle">
                     <i class="fas fa-moon"></i>
                 </div>
@@ -265,46 +271,45 @@
         </section>
 
         <section id="projects" class="scroll projects">
-            <div class="content container">
-                <h2 class="section-title">Our Current Projects</h2>
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>College Campus Navigator</h3>
-                        <p>An interactive map system for college campuses with detailed map design and interactive
-                            tooltips — similar to Google Maps.</p>
-                        <div class="project-tech">
-                            <span>Html,CSS</span>
-                            <span>JavaScript</span>
-                            <span>Mapping API</span>
-                            <span>GSAP Animation</span>
-                        </div>
-                        <a href="https://minor-project1-lyart.vercel.app" class="btn secondary" target="_blank"
-                            rel="noopener noreferrer">Explore</a>
+  <div class="content container">
+    <h2 class="section-title">Our Current Projects</h2>
 
-                    </div>
-                    <div class="project-image">
-                
-                    </div>
-                    <div class="project-content">
-                        <h3>JobPortal</h3>
-                        <p>Interactive platform enabling job applications, recruiter postings, role-based access, and
-                            real-time notifications.</p>
-                        <div class="project-tech">
-                            <span>ReactJs</span>
-                            <span>JavaScript</span>
-                            <span>Mapping API</span>
-                            <span>MERN Based</span>
-                        </div>
-                        <a href="https://minor-project1-lyart.vercel.app" class="btn secondary" target="_blank"
-                            rel="noopener noreferrer">Explore</a>
+    <div class="project-card">
+      <div class="project-image">
+        <img class="image" src="all images/project1.jpg" alt="">
+      </div>
+      <div class="project-content">
+        <h3>College Campus Navigator</h3>
+        <p>An interactive map system for college campuses...</p>
+        <div class="project-tech">
+          <span>HTML, CSS</span>
+          <span>JavaScript</span>
+          <span>Mapping API</span>
+          <span>GSAP Animation</span>
+        </div>
+        <a href="https://minor-project1-lyart.vercel.app" class="btn secondary">Explore</a>
+      </div>
+    </div>
 
-                    </div>
-                    <div class="project-image">
-                       
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="project-card">
+      <div class="project-image">
+       <img class="image" src="all images/night steet.jpg" alt="">
+      </div>
+      <div class="project-content">
+        <h3>JobPortal</h3>
+        <p>Interactive platform enabling job applications...</p>
+        <div class="project-tech">
+          <span>ReactJs</span>
+          <span>JavaScript</span>
+          <span>MERN Based</span>
+        </div>
+        <a href="https://minor-project1-lyart.vercel.app" class="btn secondary">Explore</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
         <section id="contact" class="scroll contact">
             <div class="container">
@@ -351,6 +356,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="portfolio.js"></script>
+<script>
+  const hamburger = document.querySelector(".hamburger");
+  const navLinks = document.querySelector(".nav-links");
+
+  hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+</script>
 
 </body>
 

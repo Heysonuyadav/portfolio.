@@ -114,200 +114,93 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add CSS for scroll animations
-    const style = document.createElement('style');
-    style.textContent = `
-        .animate-hidden {
-            opacity: 0;
-            transform: translateY(60px) scale(0.95);
-            transition: opacity 1s ease, transform 1s ease;
+    
+
+
+    // ---------- Portrait Element ----------
+    const portrait = document.querySelector(".portrait");
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (portrait) {
+        if (!isMobile) {
+            portrait.addEventListener("mouseenter", () => {
+                gsap.to(portrait, { scale: 1.3, duration: 0.5, rotation: 0 });
+            });
+            portrait.addEventListener("mouseleave", () => {
+                gsap.to(portrait, { scale: 1, duration: 0.5, rotation: 0 });
+            });
+        } else {
+            gsap.fromTo(portrait,
+                { scale: 0.95, opacity: 0 },
+                { 
+                    scale: 1, opacity: 1, duration: 1, ease: "power1.out",
+                    scrollTrigger: { trigger: portrait, start: "top 80%", toggleActions: "play none none none" }
+                }
+            );
         }
-        
-        .animate-visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-    `;
-    document.head.appendChild(style);
-});
+    }
 
+    // ---------- Register ScrollTrigger ----------
+    gsap.registerPlugin(ScrollTrigger);
 
-const portrait = document.querySelector(".portrait");
+    const animProps = isMobile ? { y: 50, duration: 0.8, ease: "power1.out" } : { y: 200, duration: 1.2, ease: "power3.out" };
 
-portrait.addEventListener("mouseenter", () => {
-    gsap.to(".portrait", { scale: 1.3, duration: 0.5, rotation: 0 })
-});
+    // Animate Hero & Subtitle
+    gsap.fromTo(".animation",
+        { y: isMobile ? -50 : -200, opacity: 0 },
+        { y: 0, opacity: 1, duration: animProps.duration, ease: animProps.ease,
+          scrollTrigger: { trigger: ".animation", toggleActions: "play none none none" }
+        });
 
-portrait.addEventListener("mouseleave", () => {
-    gsap.to(".portrait", { scale: 1, duration: 0.5, rotation: 0 })
-})
-
-
-
-gsap.registerPlugin(ScrollTrigger);
-
-gsap.fromTo(".animation",
-    { y: -200, opacity: 0 },
-    {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        scrollTrigger: {
-            trigger: ".animation",
-
-            toggleActions: "play reverse play reverse"
-        }
-    })
     gsap.fromTo(".subtitle",
-    { y: 50, opacity: 0 },
-    {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        scrollTrigger: {
-            trigger: ".animation",
+        { y: isMobile ? 20 : 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: animProps.duration, ease: animProps.ease,
+          scrollTrigger: { trigger: ".animation", toggleActions: "play none none none" }
+        });
 
-            toggleActions: "play reverse play reverse"
-        }
-    })
-
-gsap.from(".cta-buttons", {
-    z: -200,
-    opacity: 0,
-    scale: 0.5,
-    duration: 1,
-    delay: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-        trigger: ".cta-buttons",
-        start: "top 80%",
-        toggleActions: "play reverse play reverse"
+    // Animate CTA buttons
+    const cta = document.querySelector(".cta-buttons");
+    if (cta) {
+        gsap.from(cta, {
+            z: -200,
+            opacity: 0,
+            scale: isMobile ? 0.8 : 0.5,
+            duration: animProps.duration,
+            delay: 0.5,
+            ease: animProps.ease,
+            scrollTrigger: { trigger: cta, start: "top 80%", toggleActions: "play none none none" }
+        });
     }
-});
 
-
-
-gsap.fromTo(".portrait",
-    { x: 300, opacity: 0 },
-    {
-        x: 0,
-        opacity: 1,
-        duration: 1.5,
-        scrollTrigger: {
-            trigger: ".portrait",
-            start: "top 50%",
-            end: "-top 5%",
-            toggleActions: "play reverse play reverse"
-        }
-
-    })
-
-// Image animation from left side
-gsap.fromTo(".about-image",
-    { x: -100, opacity: 0 },
-    {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        scrollTrigger: {
-            trigger: ".about",
-            start: "top 60%",
-            end: "-top 5%",
-            toggleActions: "play reverse play reverse",
-        }
-
+    // About Section
+    const aboutImg = document.querySelector(".about-image");
+    const aboutText = document.querySelector(".about-text");
+    if (aboutImg) {
+        gsap.fromTo(aboutImg, { x: isMobile ? -50 : -100, opacity: 0 },
+                    { x: 0, opacity: 1, duration: animProps.duration,
+                      scrollTrigger: { trigger: ".about", start: "top 70%", toggleActions: "play none none none" } });
     }
-)
+    if (aboutText) {
+        gsap.fromTo(aboutText, { x: isMobile ? 50 : 100, opacity: 0 },
+                    { x: 0, opacity: 1, duration: animProps.duration, delay: 0.1,
+                      scrollTrigger: { trigger: ".about", start: "top 70%", toggleActions: "play none none none" } });
+    }
 
-// Text animation right side
-gsap.fromTo(".about-text",
-    { x: 100, opacity: 0 },
-    {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.1,
-        scrollTrigger: {
-            trigger: ".about",
-            start: "top 60%%",
-            end: "-top 5%",
-            toggleActions: "play reverse play reverse"
-        }
+    // Section titles
+    document.querySelectorAll(".section-title").forEach(title => {
+        gsap.fromTo(title, { y: isMobile ? -25 : -50, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.5,
+                      scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none none" } });
     });
 
-// Title fade-in from top
-gsap.fromTo(".section-title",
-    { y: -50, opacity: 0 },
-    {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        scrollTrigger: {
-            trigger: ".about",
-            start: "top 85%",
-            end: "-top 5%",
-            toggleActions: "play reverse play reverse"
+    // Cards
+    [".card1", ".card2", ".card3"].forEach((selector, i) => {
+        const el = document.querySelector(selector);
+        if (el) {
+            const xStart = isMobile ? 0 : (selector === ".card1" ? -100 : (selector === ".card3" ? 100 : 0));
+            gsap.fromTo(el, { x: xStart, opacity: 0, scale: isMobile ? 0.95 : 0.8 },
+                         { x: 0, opacity: 1, scale: 1, duration: animProps.duration, delay: 0.2*i, ease: animProps.ease,
+                           scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" } });
         }
-    });
-
-
-document.querySelectorAll(".scroll").forEach(elem => {
-    ScrollTrigger.create({
-        trigger: elem,
-        start: "top 50%",
-        end: "bottom 50%",
-        toggleClass: { targets: elem, className: "animate-visible" },
-        toggleActions: "play reverse play reverse"
     });
 });
-
-gsap.fromTo(".card1",
-    { x: -100, opacity: 0 },
-    {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.5,
-        scrollTrigger: {
-            trigger: ".card1",
-            start: "top 60%",
-            end: "buttom 5%",
-            toggleActions: "play reverse play reverse"
-        }
-    });
-    gsap.fromTo(".card3",
-    { x: 100, opacity: 0 },
-    {
-        x: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.5,
-        ease:"power3.out",
-        scrollTrigger: {
-            trigger: ".card3",
-            start: "top 60%",
-            end: "buttom 2%",
-            toggleActions: "play reverse play reverse"
-        }
-    });
-
-    gsap.from("card2", {
-    z: -200,
-    opacity: 0,
-    scale: 0.5,
-    duration: 1,
-    delay: 0.1,
-    ease: "power3.out",
-    scrollTrigger: {
-        trigger: ".card2",
-        start: "top 60%",
-        end:"top 5%",
-        toggleActions: "play reverse play reverse"
-    }
-});
-
-
-
-
-
-
